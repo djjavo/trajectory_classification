@@ -46,11 +46,11 @@ def filter_data(pl, t):
     boolf = False
     l_final = []
     if 2 < len(pl_split) <= 60:
-        loc_start = map(float, pl_split[0][2:].split(","))
+        loc_start = list(map(float, pl_split[0][2:].split(",")))
         if equal_tol(loc_start[0], LON_SB, TOL_LONS_SB) and equal_tol(loc_start[1], LAT_SB, TOL_LATS_SB):
-            loc_end = map(float, pl_split[-1][:-2].split(","))
+            loc_end = list(map(float, pl_split[-1][:-2].split(",")))
             if LON_INF_P < loc_end[0] < LON_SUP_P and LAT_INF_P < loc_end[1] < LAT_SUP_P:
-                l_final = [loc_start] + [map(float, x.split(",")) for x in pl_split[1:-1]] + [loc_end]
+                l_final = [loc_start] + [list(map(float, x.split(","))) for x in pl_split[1:-1]] + [loc_end]
                 if speed_under_25(l_final):
                     boolf = True
     return boolf, l_final, t
@@ -135,8 +135,8 @@ def deltat_forward_column(frame):
     speed : the speed column
     """
     deltat = np.hstack((0, frame.time.values[1:] - frame.time.values[0:-1]))
-    deltad = np.hstack((0, map(c_great_circle_distance, frame.lons.values[1:], frame.lats.values[1:],
-                               frame.lons.values[0:-1], frame.lats.values[0:-1])))
+    deltad = np.hstack((0, list(map(c_great_circle_distance, frame.lons.values[1:], frame.lats.values[1:],
+                               frame.lons.values[0:-1], frame.lats.values[0:-1]))))
     speed = deltad / deltat
     return speed
 
@@ -155,7 +155,7 @@ def equal_tol(a, b, tol=0.):
 def get_good_trajet(df_traj):
 
     # Trajectory with more than two locations
-    correct_id_traj = set([k for k, v in collections.Counter(df_traj.id_traj).items() if v > 2])
+    correct_id_traj = set([k for k, v in list(collections.Counter(df_traj.id_traj).items()) if v > 2])
 
     # Trajectory with Pickup train in Caltrain Area
     df_pickup = df_traj[df_traj["pickup"]][["lons", "lats", "id_traj"]].values

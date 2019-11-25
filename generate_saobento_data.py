@@ -11,7 +11,7 @@ print("Generate Sao Bento dataset from " + INPUT_FILE + " file.")
 ts = time.time()
 train_filter = [filter_data(pl, t) for pl, t in pd.read_csv(INPUT_FILE, sep=",")[["POLYLINE", "TIMESTAMP"]].values]
 train_ = [polyline_to_df(np.array(coord), t, idt) for idt, (boolf, coord, t) in
-          enumerate(filter(lambda x: x[0], train_filter))]
+          enumerate([x for x in train_filter if x[0]])]
 train = pd.concat(train_).astype({"occupancy": np.int, "time": np.int, "id_traj": np.int})
 nb_traj = len(train.id_traj.unique())
 te = time.time()
