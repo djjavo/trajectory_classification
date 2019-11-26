@@ -49,7 +49,9 @@ def create_cumsum_data(data):
     data_cumsum : pandas DataFrame where each score columns represent cumulative sum of the different score
     according to id_traj columns
     """
-    scores_columns = filter(lambda c: c.startswith("score_"), data.columns)
+    scores_columns = list(filter(lambda c: c.startswith("score_"), data.columns))
+    # or scores_columns = list([c for c in data.columns if c.startswith("score_")])
+    
     data_cumsum = data.groupby("id_traj")[scores_columns].apply(lambda t: t.cumsum())
     return data_cumsum
 
