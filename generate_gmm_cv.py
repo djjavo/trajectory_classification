@@ -1,7 +1,7 @@
 import pandas as pd
 import pickle
 from utils.generate_data import DATA_DIR
-from utils.gmm_cv import build_cross_clust_mixt_cv, compute_classification_score
+from utils.gmm_cv import build_cross_clust_mixt_cv
 
 
 ## Caltrain
