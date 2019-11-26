@@ -29,7 +29,7 @@ def nb_clust_with_bic_(coord_tc, min_nc=2, max_nc=20):
     max_ncf = min(max_nc, len(coord_tc))
     nc_bic = [-1, np.inf, []]
     for nc in range(min_nc, max_ncf):
-        gmm = GMM(n_components=nc, covariance_type="full", min_covar=10e-8)
+        gmm = GaussianMixture(n_components=nc, covariance_type="full", min_covar=10e-8)
         gmm.fit(coord_tc)
         bic = gmm.bic(coord_tc)
         nc_bic = min([nc_bic, [nc, bic, gmm]], key=lambda x: x[1])
