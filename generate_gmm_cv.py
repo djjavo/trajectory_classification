@@ -37,7 +37,7 @@ print("SaoBento Dataset")
 
 # Download cv_list (for result reproduction)
 output_cv = DATA_DIR + "cv_list_SaoBento.pkl"
-cv_list = pickle.load(open(output_cv, "r"))
+cv_list = pickle.load(open(output_cv, "rb"))
 
 # Download data
 data_original = pd.read_pickle(DATA_DIR + "Sao_bento.pkl")[["id_traj", "lons", "lats"]].reset_index(drop=True)
